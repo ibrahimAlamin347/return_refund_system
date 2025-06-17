@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: return-refund-system
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn core.wsgi:application"
+    envVars:
+      - key: DEBUG
+        value: False
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: DATABASE_URL
+        value: # This will be added by Render
+      - key: SECRET_KEY
+        generateValue: true
+    autoDeploy: true 
