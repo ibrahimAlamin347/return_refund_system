@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Refund Request Form</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'returns/css/forms.css' %}">
+  </head>
+  <body>
+    <div class="form-container">
+      <nav>
+        <a href="/">Home</a>
+        <a href="/submit/">Return</a>
+        <a href="/refund/submit/" class="active">Refund</a>
+        <a href="/dispute/submit/">Dispute</a>
+      </nav>
+      <h2>Submit Refund Request</h2>
+      <p class="form-description" style="color:#fff; text-align:center; margin-bottom:18px; font-size:1.08rem; text-shadow:0 1px 2px rgba(0,0,0,0.18);">
+        Use this form to request a refund for a previously submitted return. Provide the related return request, refund amount, and any additional notes. Our team will process your refund and update you on the status.
+      </p>
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit Refund</button>
+      </form>
+    </div>
+  </body>
+</html> 

@@ -1,0 +1,144 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Return Request Form</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'returns/css/forms.css' %}">
+  </head>
+  <body>
+    <div class="form-container">
+      <nav>
+        <a href="/">Home</a>
+        <a href="/submit/" class="active">Return</a>
+        <a href="/refund/submit/">Refund</a>
+        <a href="/dispute/submit/">Dispute</a>
+      </nav>
+      <h2>Submit Return Request</h2>
+      <p class="form-description" style="color:#fff; text-align:center; margin-bottom:18px; font-size:1.08rem; text-shadow:0 1px 2px rgba(0,0,0,0.18);">
+        Use this form to request a return for a product you purchased. Please provide your order details, the reason for your return, and the condition of the product. Our team will review your request and notify you of the next steps.
+      </p>
+      <form method="post" id="returnForm">
+        {% csrf_token %}
+        <label for="customer_name">Customer Name</label>
+        <input
+          type="text"
+          id="customer_name"
+          required
+          placeholder="Enter your full name"
+        />
+
+        <label for="product_name">Product Name</label>
+        <input
+          type="text"
+          id="product_name"
+          required
+          placeholder="Enter product name"
+        />
+
+        <label for="order_id">Order ID</label>
+        <input
+          type="text"
+          id="order_id"
+          required
+          placeholder="Enter order number"
+        />
+
+        <label for="reason">Reason for Return</label>
+        <textarea
+          id="reason"
+          rows="3"
+          required
+          placeholder="Please describe why you're returning this product"
+        ></textarea>
+
+        <label for="condition">Product Condition</label>
+        <select id="condition">
+          <option value="good">Good (unused/unopened)</option>
+          <option value="damaged">Damaged/Defective</option>
+        </select>
+
+        <label for="within">Is Within Return Period?</label>
+        <select id="within">
+          <option value="true">Yes</option>
+          <option value="false">No</option>
+        </select>
+
+        <label for="image">Product Image URL (optional)</label>
+        <input
+          type="url"
+          id="image"
+          placeholder="https://example.com/image.jpg"
+        />
+
+        <button type="submit">Submit Request</button>
+      </form>
+      <p class="success-message" id="successMessage" style="display: none">
+        Return request submitted successfully!
+      </p>
+    </div>
+
+    <script>
+      // CSRF helper function
+      function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+          const cookies = document.cookie.split(';');
+          for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+            }
+          }
+        }
+        return cookieValue;
+      }
+
+      document
+        .getElementById("returnForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const payload = {
+            customer_name: document.getElementById("customer_name").value,
+            product_name: document.getElementById("product_name").value,
+            order_id: document.getElementById("order_id").value,
+            reason_for_return: document.getElementById("reason").value,
+            product_condition: document.getElementById("condition").value,
+            within_return_period:
+              document.getElementById("within").value === "true",
+            image_url: document.getElementById("image").value || null,
+          };
+
+          const csrftoken = getCookie('csrftoken');
+
+          try {
+            const res = await fetch("http://127.0.0.1:8000/api/returns/", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": csrftoken
+              },
+              body: JSON.stringify(payload),
+            });
+
+            if (res.ok) {
+              window.location.href = "/success/";
+            } else {
+              alert("Submission failed. Please try again.");
+              console.error(await res.text());
+            }
+          } catch (err) {
+            alert("Network error. Please check your connection.");
+            console.error(err);
+          }
+        });
+    </script>
+  </body>
+</html>

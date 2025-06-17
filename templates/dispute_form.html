@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dispute a Refund</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'returns/css/forms.css' %}">
+  </head>
+  <body>
+    <div class="form-container">
+      <nav>
+        <a href="/">Home</a>
+        <a href="/submit/">Return</a>
+        <a href="/refund/submit/">Refund</a>
+        <a href="/dispute/submit/" class="active">Dispute</a>
+      </nav>
+      <h2>Dispute a Refund</h2>
+      <p class="form-description" style="color:#fff; text-align:center; margin-bottom:18px; font-size:1.08rem; text-shadow:0 1px 2px rgba(0,0,0,0.18);">
+        If you disagree with a refund decision, use this form to submit a dispute. Provide your details, the refund in question, and a clear explanation of your concerns. Our team will review your dispute and respond as soon as possible.
+      </p>
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit Dispute</button>
+      </form>
+    </div>
+  </body>
+</html> 

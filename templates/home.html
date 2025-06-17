@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Return & Refund System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'returns/css/forms.css' %}">
+  </head>
+  <body>
+    <div class="home-container">
+      <div class="home-title">Return, Refund and Dispute Management System</div>
+      <div class="home-subtitle">Easily manage product returns, refunds, and disputes</div>
+      <div class="home-desc">
+        This platform streamlines the process of handling product returns and refunds for your business. Customers can submit return requests, request refunds, or dispute refund decisions with ease. Our system automates decision logic, provides a clear workflow for admins, and ensures a smooth experience for both customers and staff.<br><br>
+        <strong>Features:</strong>
+        <ul style="color:#fff; text-align:left; max-width:500px; margin:18px auto 0 auto; font-size:1rem;">
+          <li><b>Return Requests:</b> Customers can submit detailed return requests for their orders.</li>
+          <li><b>Refund Management:</b> Process and track refunds linked to returns.</li>
+          <li><b>Dispute Handling:</b> Customers can dispute refund decisions for further review.</li>
+          <li><b>Admin Dashboard:</b> Manage all requests and disputes efficiently.</li>
+        </ul>
+      </div>
+      <div class="home-nav">
+        <a class="home-link" href="/submit/">Submit Return Request</a>
+        <a class="home-link" href="/refund/submit/">Request Refund</a>
+        <a class="home-link" href="/dispute/submit/">Dispute Refund</a>
+      </div>
+    </div>
+  </body>
+</html> 
